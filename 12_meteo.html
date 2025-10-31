@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React – useEffect & useState</title>
+
+    <!-- React, ReactDOM et Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
+    <h1 class="text-3xl font-bold mb-6">Suivi de température</h1>
+    <div id="root" class="w-full max-w-xl"></div>
+
+    <script type="text/babel">
+      // const { useState, useEffect } = React; commenté car produisait un bug de mon coté (Etonnant)
+
+      const data = [
+      { "time": "14:00", "temperature": 18.7 },
+      { "time": "14:01", "temperature": 19.1 },
+      { "time": "14:02", "temperature": 18.5 },
+      { "time": "14:03", "temperature": 20.3 },
+      { "time": "14:04", "temperature": 21.2 },
+      { "time": "14:05", "temperature": 22.0 },
+      { "time": "14:06", "temperature": 22.5 },
+      { "time": "14:07", "temperature": 23.1 },
+      { "time": "14:08", "temperature": 22.8 },
+      { "time": "14:09", "temperature": 21.7 }
+    ]
+    
+      
+      function App() {
+
+        const [loading, setLoading] = React.useState(true);
+
+        React.useEffect(() => {
+          setTimeout(()=>{
+            setLoading(false);
+          },1000)
+        }, []);
+
+        const bgColor = (numb) => {
+
+          if (numb%2 ===0) return "bg-slate-800";
+          return "bg-slate-700"; 
+
+        };
+
+        return (
+          <div className="bg-slate-800 p-4 rounded-xl shadow-lg">
+            {loading ? (
+              <p className="text-center text-gray-400 animate-pulse">Chargement des données...</p>
+            ) : (
+              <table className="w-full border-collapse text-sm">
+                <thead>
+                  <tr className="bg-slate-700 text-gray-200">
+                    <th className="p-2 text-left">Heure</th>
+
+                    <th className="p-2 text-right">Température (°C)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map(({time, temperature}, inex) =>(
+                    <tr key={inex} className={`${bgColor(inex)} hover:bg-slate-400`}>
+                      <th>{time}</th>
+                      <th>{temperature}</th>
+                    </tr>
+                   ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

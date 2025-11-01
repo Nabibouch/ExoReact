@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 11</title>
+</head>
+<body>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        function App() {
+
+            const [counter, setCounter] = React.useState(0);
+            const [isActive, setIsActive] = React.useState(false);
+
+            React.useEffect(() => {
+                let interval = null;
+
+                if (isActive) {
+                    interval = setInterval(() => {
+                        setCounter(prev => prev + 1);
+                    }, 1000);
+                } else {
+                    clearInterval(interval);
+                }
+                return () => clearInterval(interval);
+            },[isActive]);
+
+            const handleClick = () => {
+                setIsActive(prev => !prev);
+            }
+
+            const handleReset = () => {
+                setCounter(0);
+                setIsActive(false); //Optionnel mais me parait plus agréable car il évite que le compteur reparte tout de suite
+            }
+
+            return(
+                <div className="flex flex-col items-center justify-center px-[5px] min-h-screen">
+                    <span>Counter : {counter}</span>
+                    <div className="flex gap-[15px]">
+                        <button onClick={handleClick} className="border border-black px-[10px] py-[1px]">
+                            {(isActive == true)? "pause":"start"}
+                        </button>
+                        <button disabled={(counter == 0)? true:false } onClick={handleReset} className="border border-black px-[10px] py-[1px]">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App />);
+    </script>
+
+</body>
+</html>

@@ -19,8 +19,8 @@
     <div id="root" class="w-full max-w-xl"></div>
 
     <script type="text/babel">
-      // const { useState, useEffect } = React; commenté car produisait un bug de mon coté (Etonnant)
 
+      //On génère de la data à la main. Plus tard, on récupèrera la data via des api !
       const data = [
       { "time": "14:00", "temperature": 18.7 },
       { "time": "14:01", "temperature": 19.1 },
@@ -37,14 +37,18 @@
       
       function App() {
 
-        const [loading, setLoading] = React.useState(true);
+        //On stock la valeur de loading qu'on initialise à true pour simuler un chargement
+        const [loading, setLoading] = React.useState(true); 
 
+        //UseEffect qui va nous permette de simuler un chargement de 1 sec grâce à un timeout
+        //En effet il fait passer loading au bout de 1 seconde à false
         React.useEffect(() => {
           setTimeout(()=>{
             setLoading(false);
           },1000)
         }, []);
 
+        //Nous permet de mettre une couleur de fond différent 1 fois sur 2 pour stylisé un peu le tableau
         const bgColor = (numb) => {
 
           if (numb%2 ===0) return "bg-slate-800";
@@ -54,6 +58,8 @@
 
         return (
           <div className="bg-slate-800 p-4 rounded-xl shadow-lg">
+            {/* Notre faux chargement lorsque loading est true il affiche chargement des données
+              et si loading est false il affiche les vrai données*/}
             {loading ? (
               <p className="text-center text-gray-400 animate-pulse">Chargement des données...</p>
             ) : (
@@ -67,7 +73,7 @@
                 </thead>
                 <tbody>
                   {data.map(({time, temperature}, inex) =>(
-                    <tr key={inex} className={`${bgColor(inex)} hover:bg-slate-400`}>
+                    <tr key={inex} className={`${bgColor(inex)} hover:bg-slate-400`}> {/* le fond différent si l'index est paire ou impaire*/}
                       <th>{time}</th>
                       <th>{temperature}</th>
                     </tr>

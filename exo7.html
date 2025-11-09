@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Composition de composants – React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f9f9f9;
+      }
+      header, footer {
+        background: #222;
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+      }
+      main {
+        padding: 20px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      // Composant Header
+      function Header() {
+        return <header><h1>My Blog</h1></header>;
+      }
+
+      // Composant Main qui affiche ses enfants
+      function Main({ children }) {
+        return <main>{children}</main>;
+      }
+
+      // Composant Footer qui reçoit son texte via props
+      function Footer({ text }) {
+        return <footer>{text}</footer>;
+      }
+
+      // Composant principal
+      function App() {
+        return (
+          <div>
+            <Header />
+            <Main>
+              <p>Welcome to my blog!</p>
+            </Main>
+            <Footer text="© 2025 React Academy" />
+          </div>
+        );
+      }
+
+      // Rendu final
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React sans JSX</title>
+    <style>
+        .title {
+            color: orange;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <!-- React et ReactDOM via CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        const STUDENTS = [
+            { id: 1, name: "Alice", grade: 15 },
+            { id: 2, name: "Bob", grade: 12 },
+            { id: 7, name: "Charlie", grade: 18 },
+            { id: 11, name: "Diana", grade: 14 },
+        ];
+
+        function average(notes) {
+            // error first
+            if (notes.length == 0) return;
+            let s = 0;
+            notes.forEach(n => s += n)
+
+            return Math.floor((s / notes.length) * 10) / 10
+        }
+
+        function App(props) {
+
+            console.log(props.students) // récupération des props 
+
+            const notes = props.students.map(s => s.grade)
+
+            console.log(notes)
+
+            const userInput = '<img src=x onerror=alert("Hacked!") />';
+
+            // les parenthèses forcent le retour des valeurs dans le return
+            return (
+                <React.Fragment>
+                    <ul>
+                        <h1>{props.title}</h1>
+                        <h2>Nombre d'étudiant: {props.counter} </h2>
+                        {props.students.map(student => {
+                            return (
+                                <li key={student.id}>{student.name} - {student.grade} </li>
+                            )
+                        })}
+                    </ul>
+                    <p>Moyenne de la classe : {average(notes)} </p>
+                    <div>{userInput}</div>
+                    <div dangerouslySetInnerHTML={{ __html: userInput }} />;
+                </React.Fragment>
+            )
+        }
+
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App
+            students={STUDENTS}
+            counter={STUDENTS.length}
+            title="HETIC"
+        />);
+    </script>
+</body>
+
+</html>

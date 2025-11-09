@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Composition de composants – React</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
+
+    header,
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    main {
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+
+    function LoginForm() {
+      const [password, setPassword] = React.useState("")
+      const [email, setEmail] = React.useState("")
+
+      const handleSubmit = (event) => {
+        event.preventDefault()
+        console.log(email, password)
+        if (password !== "" && email !== "") {
+          setEmail("")
+          setPassword("")
+        }
+      }
+
+      const handleChange = (event) => {
+        //console.log(event.target.value)
+        //console.log(event.target.name)
+        const { value, name } = event.target // destructuration
+        console.log(value, name)
+        if (name == "password") setPassword(value)
+        if (name == "email") setEmail(value)
+      }
+
+      return (
+        <div>
+          <form onSubmit={handleSubmit}>
+            <p>
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={handleChange}
+              />
+            </p>
+            <p>
+              <label>Password</label>
+              <input
+                type="password"
+                name="password"
+                value={password}
+                onChange={handleChange}
+              />
+            </p>
+            <p>
+              <button>Connect</button>
+            </p>
+          </form>
+        </div>
+      );
+    }
+
+    // Rendu final
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<LoginForm />);
+  </script>
+</body>
+
+</html>

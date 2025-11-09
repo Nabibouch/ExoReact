@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React sans JSX</title>
+    <style>
+        .title {
+            color: orange;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <!-- React et ReactDOM via CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const PRODUCTS = [
+            { name: "Mouse", price: 15, image: "https://picsum.photos/seed/mouse/100", inStock: true },
+            { name: "Keyboard", price: 45, image: "https://picsum.photos/seed/keyboard/100", inStock: true },
+            { name: "Headphones", price: 25, image: "https://picsum.photos/seed/headphones/100", inStock: false },
+        ];
+
+        function ProductCard({ name, price, image, inStock }) {
+            return (
+                <div className="card">
+                    <img src={image} alt={name} width="100" height="100" />
+                    <h3>{name}</h3>
+                     { price < 20 ? <p>Promo</p> : null }
+                    {inStock ? <p>Dispo</p> : <p>Plus dispo</p>}
+                </div>
+            );
+        }
+
+        function App(props) {
+
+            return (
+                <div>
+                    {props.products.map((product, index) => {
+
+                        return <ProductCard
+                            name={product.name}
+                            price={product.price}
+                            image={product.image}
+                            inStock={product.inStock}
+                        />
+                    })}
+                </div>
+            )
+
+        }
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App products={PRODUCTS} />);
+    </script>
+</body>
+
+</html>

@@ -6,6 +6,7 @@
     <title>Exercice 11</title>
 </head>
 <body>
+    <!-- Import de react, react dom, babel et tailwind -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -17,18 +18,21 @@
 
         function App() {
 
-            const [counter, setCounter] = React.useState(0);
-            const [isActive, setIsActive] = React.useState(false);
+// On déclare les différente state
+            const [counter, setCounter] = React.useState(0); //stock la valeur du counter
+            const [isActive, setIsActive] = React.useState(false); //permet de savoir si le compteur est actif ou non
 
+            //useEffect qui se déclenche à chaque changement de "isActive"
             React.useEffect(() => {
                 let interval = null;
 
+                //incrément le counter de 1 toute les sec si "isActive" est true sinon il arrête le minuteur
                 if (isActive) {
                     interval = setInterval(() => {
                         setCounter(prev => prev + 1);
                     }, 1000);
                 } else {
-                    clearInterval(interval);
+                    clearInterval(interval); //arrête le minuteur
                 }
                 return () => clearInterval(interval);
             },[isActive]);
@@ -47,7 +51,7 @@
                     <span>Counter : {counter}</span>
                     <div className="flex gap-[15px]">
                         <button onClick={handleClick} className="border border-black px-[10px] py-[1px]">
-                            {(isActive == true)? "pause":"start"}
+                            {(isActive == true)? "pause":"start"} {/* ternaire qui affiche pause si isActive est true ou start s'il est false */}
                         </button>
                         <button disabled={(counter == 0)? true:false } onClick={handleReset} className="border border-black px-[10px] py-[1px]">
                             Reset

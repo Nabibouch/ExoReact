@@ -29,10 +29,10 @@ Voici un code que vous devez **analyser et expliquer**, en vous appuyant sur le 
   <div id="root" class="w-full max-w-xl"></div>
 
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState, useEffect } = React; //On récupère les méthodes de l'objet React pour nous faciliter l'écriture
 
     function Counter() {
-      const [count, setCount] = useState(0);
+      const [count, setCount] = useState(0); // Ici on crée un état ou state pour sauvegarder la variable count et pouvoir la modifier dans le composant 
 
       useEffect(() => {
         console.log("MONTAGE / MISE À JOUR :", count);
@@ -44,10 +44,12 @@ Voici un code que vous devez **analyser et expliquer**, en vous appuyant sur le 
       });
 
       return (
+        //React.fragment sert ici à envelopper les différentes balise car react ne peut retourner qu'un seul élément parent, on aurait pu mettre une div mais cela est moins propre
         <React.Fragment>
+        // on affiche le count actuelle, on le met entre {} car il s'agit d'un state en Js. Pour écrire du js "pure" on utilise les {}//
           <p>Compteur : {count}</p>
           <button
-            onClick={() => setCount(count + 1)}
+            onClick={() => setCount(count + 1)} //On incrémente de 1 count à chaque clique
             className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded mt-2"
           >
             +1
@@ -62,13 +64,13 @@ Voici un code que vous devez **analyser et expliquer**, en vous appuyant sur le 
       return (
         <div className="bg-slate-800 p-4 rounded-xl shadow-lg">
           <button
-            onClick={() => setStatus(!status)}
+            onClick={() => setStatus(!status)} //lorsque l'on clique, status se change en sa valeur inverse (true à false ou false à true)
             className="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded mb-4"
           >
             Changer le statut
           </button>
 
-          {status && <Counter />}
+          {status && <Counter />} //On affiche le composant seulement si status est true
         </div>
       );
     }
@@ -127,6 +129,13 @@ import React, { useReducer } from "react";
 
 function reducer(state, action) {
   switch (action.type) {
+    case "incremente" : 
+      return {...state, count : state.count + 1}
+    case "decremente" :
+      return {...state, count : state.count - 1}
+
+    case "reset" : 
+      return {...state, count : 0}
     // TODO 
     default:
       return state;
@@ -139,7 +148,10 @@ export default function CounterReducer() {
 
   return (
     <div className="p-4 bg-slate-800 rounded-lg text-white">
-    
+    <h1>Counter avec reducer : {state.count}</h1>
+    <button onClick = {() => dispatch({type : "incremente"})}>incremente</button>
+    <button onClick = {() => dispatch({type : "decremente"})}>decremente</button>
+    <button onClick ={() => dispatch({type : "reset"})}>reset</button>
     </div>
   );
 }

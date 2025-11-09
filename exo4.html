@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React sans JSX</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  
+  function Hello() {
+    return <h2>Hello World Component</h2>;
+  }
+
+  function App() { 
+const students = ["Alan", "Alice", "Sophie"];
+const notes = [[12,14,11],[1,4,9],[12,19,20]];
+
+
+    return (
+      <div>
+        <ul>
+          {students.map((item, index) =>(
+              <li key={index}> {item}</li>
+          ))}
+          
+        </ul>
+
+        <ul>
+          {notes.map((value, index) => (
+            <ul key={index}>{value.map((value2,index2) => (
+              <li key={index2}>{value2}</li>
+            ))}</ul>
+          ))}
+        </ul>
+      </div>
+      
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<App />);
+</script>
+  </body>
+</html>

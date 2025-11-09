@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exo3</title>
+</head>
+<body>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <div id="root"></div>
+    <script type="text/babel">
+
+        function Card(props) {
+
+            return(
+                <React.Fragment>
+                    <h1>{props.name}</h1>
+                    <img src={props.img} alt={props.name}/>
+                    <span>{props.price}</span>
+                </React.Fragment>
+            )
+        }
+
+        function App() {
+
+
+            return(
+                <React.Fragment>
+                    <Card name="Pc" img="https://imgs.search.brave.com/k7kXjICeipPSofPi7hINVWLcrPuU4chfsVf8f95Cohc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/cGNzcGVjaWFsaXN0/LmZyL2ltYWdlcy9s/YW5kaW5nL3Bjcy9j/dXN0b20tcGMvYnRm/X3BjLnBuZw" price="1000 euro" />
+                </React.Fragment>
+            )
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+
+<!-- Jsx est beaucoup plus lisible car il nous permet d'ecrire du code qui ressemble bien plus
+ à du html classique et qu'il est donc bien moins verbeux que la version classique de react -->

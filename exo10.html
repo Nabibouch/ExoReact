@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exo 10</title>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        function App() {
+            const [tasks, setTasks] = React.useState([]);
+            const [newTask, setNewTask] = React.useState("");
+            const [visible, setVisible] = React.useState(false);
+            const [editedTask, setEditedTask] = React.useState("");
+            const [editedTaskIndex, setEditedTaskIndex] = React.useState(0);
+
+            const handleNewTask = () => {
+                if (!newTask.trim()) return; 
+                setTasks([...tasks, newTask]);
+                setNewTask("");
+            }
+
+            const handleSupp = (e) => {
+                const newList = tasks.filter((_,i) => i !== e);
+                setTasks(newList);
+            }
+
+            const handleEdit = (e) => {
+                setVisible(true);
+                setEditedTaskIndex(e);
+            }
+
+            const editToDoList = (index) => {
+                const newList = [...tasks];
+                newList[index] = editedTask;
+                setTasks(newList);
+                setEditedTask("");
+                setEditedTaskIndex(0);
+                setVisible(false);
+            }
+            
+            return (
+                <div>
+                    <h1>Todo list</h1>
+                    <input value={newTask} type="text" onChange={(e)=>setNewTask(e.target.value)} />
+                    <button onClick={handleNewTask} >add</button>
+                    <ul>
+                        {tasks.map((value, index) => (
+                            <div key={index}>
+                                <li>{value}</li>
+                                <button onClick={() => handleSupp(index)}>supp</button>
+                                <button onClick={() => handleEdit(index)}>edit</button>
+                            </div>
+                        ))}
+                    </ul>
+                    {visible && (
+                    <div>
+                        <input value={editedTask} type="text" onChange ={(e)=>setEditedTask(e.target.value)} />
+                        <button onClick={()=>editToDoList(editedTaskIndex)} >ok</button>
+                    </div>
+                    )}
+                </div>
+            )
+
+        }
+
+
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<App />);
+    </script>
+    
+</body>
+</html>
